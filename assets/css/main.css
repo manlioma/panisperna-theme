@@ -473,38 +473,44 @@ main,
     z-index: 1;
 }
 
-/* Event card dot: centered under the image, not the full card */
+/* Event card dot: centered under the image (50% of card width) */
 .event-card-wrap .card__dot {
     margin: -13px 0 0;
-    /* image is 50% width, so center dot at 25% of card */
     align-self: flex-start;
     margin-left: 25%;
     transform: translateX(-50%);
+}
+
+/* Card pacchetto dot: centered in each column, aligned with grid lines */
+.card--pacchetto .card__dot {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* --- Card Consiglio (hover) --- */
 .card--consiglio {
     align-items: center;
     position: relative;
+    overflow: visible;
 }
 
 .card--consiglio .card__image {
     position: relative;
 }
 
-.card--consiglio__hover {
-    display: none;
-}
-
 .card--consiglio .card__body {
-    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
     text-align: center;
     width: 100%;
+    position: relative;
+    z-index: 2;
+    transition: background 0.3s ease-in-out, margin-top 0.3s ease-in-out, padding 0.3s ease-in-out;
 }
 
 .card--consiglio:hover .card__body {
     background: var(--color-yellow);
-    transform: translateY(-5px);
+    margin-top: -80px;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
 /* Hide default content, show hover content on hover */
@@ -1030,8 +1036,8 @@ main,
 }
 
 .event-card-wrap {
-    flex: 1 1 calc(50% - 10px);
-    min-width: 500px;
+    width: calc(50% - 10px);
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
 }
