@@ -32,6 +32,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Libreria Swiper (photo carousels)
+    document.querySelectorAll('.libreria-swiper').forEach(function (el) {
+        new Swiper(el, {
+            slidesPerView: 1,
+            spaceBetween: 4,
+            grabCursor: true,
+            loop: true,
+            breakpoints: {
+                768: {
+                    slidesPerView: 1.2,
+                },
+            },
+        });
+    });
+
     // AJAX Add to Cart
     document.querySelectorAll('.ajax-add-to-cart').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
