@@ -254,6 +254,20 @@ get_header(); ?>
                     $foto = panisperna_field('consiglio_foto');
                     $nome = panisperna_field('consiglio_nome', false, get_the_title());
                 ?>
+                    <?php
+                    // Get first linked book info for hover state
+                    $consiglio_libri = panisperna_field('consiglio_libri');
+                    $libro_title = '';
+                    $libro_author = '';
+                    if ($consiglio_libri && !empty($consiglio_libri)) {
+                        $first_book = is_object($consiglio_libri[0]) ? $consiglio_libri[0] : null;
+                        if ($first_book) {
+                            $libro_title = $first_book->post_title;
+                            $book_product = wc_get_product($first_book->ID);
+                            $libro_author = $book_product ? $book_product->get_attribute('autore') : '';
+                        }
+                    }
+                    ?>
                     <a href="<?php the_permalink(); ?>" class="card card--consiglio">
                         <div class="card__image" style="height: 495px;">
                             <?php if ($foto) : ?>
@@ -264,12 +278,17 @@ get_header(); ?>
                             <?php else : ?>
                                 <?php the_post_thumbnail('consiglio-portrait', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
                             <?php endif; ?>
-                            <div class="card--consiglio__hover">
-                                <span class="card--consiglio__cta">Approfondimento &rarr;</span>
-                            </div>
                         </div>
-                        <div class="card__body" style="text-align:center;border-bottom:var(--border-accent);width:100%;">
-                            <h4 class="card__title"><?php echo esc_html($nome); ?></h4>
+                        <div class="card__body" style="border-bottom:var(--border-accent);width:100%;">
+                            <div class="card--consiglio__default">
+                                <h4 class="card__title" style="height:auto;text-align:center;"><?php echo esc_html($nome); ?></h4>
+                            </div>
+                            <div class="card--consiglio__expanded">
+                                <span class="consiglio-name"><?php echo esc_html($nome); ?></span>
+                                <span class="consiglio-label">Consiglia</span>
+                                <span class="consiglio-book"><?php echo esc_html($libro_title ?: 'Titolo del Libro'); ?></span>
+                                <span class="consiglio-author">Di <?php echo esc_html($libro_author ?: 'Autore del libro'); ?></span>
+                            </div>
                         </div>
                         <div class="card__dot"></div>
                     </a>
