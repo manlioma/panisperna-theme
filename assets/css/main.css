@@ -471,6 +471,7 @@ main,
     margin: -13px auto 0;
     position: relative;
     z-index: 1;
+    transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
 /* Event card dot: centered under the image (50% of card width) */
@@ -507,13 +508,14 @@ main,
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    transition: flex 0.3s ease-in-out;
+    transition: flex 0.3s ease-in-out, height 0.3s ease-in-out;
 }
 
 .card--consiglio .card__image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: height 0.3s ease-in-out;
 }
 
 .card--consiglio .card__body {
@@ -532,22 +534,30 @@ main,
 
 /* Hide default content, show hover content on hover */
 .card--consiglio__default {
-    display: block;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
 }
 
 .card--consiglio__expanded {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .card--consiglio:hover .card--consiglio__default {
-    display: none;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 .card--consiglio:hover .card--consiglio__expanded {
-    display: flex;
+    max-height: 200px;
+    opacity: 1;
 }
 
 .card--consiglio__expanded .consiglio-name {
