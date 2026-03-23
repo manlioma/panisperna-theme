@@ -92,11 +92,11 @@ include locate_template('template-parts/hero-page.php');
             <h2 class="section-title__heading">Chi siamo</h2>
             <p class="section-title__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
         </div>
-        <div class="cards-grid" style="gap:20px;margin-top:var(--space-3xl);">
+        <div class="cards-grid cards-grid--pacchetti" style="margin-top:var(--space-3xl);">
             <?php
             $team = ['Masud', 'Ada', 'Vania', 'Eleonora'];
             foreach ($team as $name) : ?>
-                <div class="card card--team" style="align-items:center;">
+                <div class="card card--pacchetto card--team" style="align-items:center;">
                     <div class="card--team__image">
                         <div style="width:100%;height:100%;background:var(--color-beige);"></div>
                     </div>
