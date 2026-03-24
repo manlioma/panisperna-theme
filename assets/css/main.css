@@ -1027,6 +1027,12 @@ main,
     font-weight: 600;
     line-height: var(--lh-h4);
     letter-spacing: -0.72px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: calc(var(--lh-h4) * 2);
 }
 
 .book-item__author {
