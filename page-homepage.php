@@ -145,7 +145,7 @@ get_header(); ?>
                 <?php while ($libri->have_posts()) : $libri->the_post(); ?>
                     <a href="<?php the_permalink(); ?>" class="book-item">
                         <div class="book-item__cover">
-                            <?php the_post_thumbnail('book-cover'); ?>
+                            <?php the_post_thumbnail('large'); ?>
                         </div>
                         <div>
                             <h4 class="book-item__title"><?php the_title(); ?></h4>

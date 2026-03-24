@@ -101,7 +101,7 @@ include locate_template('template-parts/hero-page.php');
                 ?>
                     <a href="<?php the_permalink(); ?>" class="book-item">
                         <div class="book-item__cover">
-                            <?php the_post_thumbnail('book-cover'); ?>
+                            <?php the_post_thumbnail('large'); ?>
                         </div>
                         <div>
                             <h4 class="book-item__title"><?php the_title(); ?></h4>
@@ -152,7 +152,7 @@ include locate_template('template-parts/hero-page.php');
                 ?>
                     <a href="<?php the_permalink(); ?>" class="book-item" style="flex:0 0 calc(25% - 24px);">
                         <div class="book-item__cover">
-                            <?php the_post_thumbnail('book-cover'); ?>
+                            <?php the_post_thumbnail('large'); ?>
                         </div>
                         <div>
                             <h4 class="book-item__title"><?php the_title(); ?></h4>

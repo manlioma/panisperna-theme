@@ -114,7 +114,7 @@ while (have_posts()) :
                         ?>
                             <a href="<?php echo esc_url($item_product->get_permalink()); ?>" class="book-item">
                                 <div class="book-item__cover">
-                                    <?php echo $item_product->get_image('book-cover'); ?>
+                                    <?php echo $item_product->get_image('large'); ?>
                                 </div>
                                 <div>
                                     <h4 class="book-item__title"><?php echo esc_html($item_product->get_name()); ?></h4>

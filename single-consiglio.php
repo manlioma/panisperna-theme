@@ -58,7 +58,7 @@ $hero_image = $foto ? $foto['id'] : (has_post_thumbnail() ? get_post_thumbnail_i
                 ?>
                     <a href="<?php echo esc_url($product->get_permalink()); ?>" class="book-item">
                         <div class="book-item__cover">
-                            <?php echo $product->get_image('book-cover'); ?>
+                            <?php echo $product->get_image('large'); ?>
                         </div>
                         <div>
                             <h4 class="book-item__title"><?php echo esc_html($product->get_name()); ?></h4>
