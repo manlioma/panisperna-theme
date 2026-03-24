@@ -47,6 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Quantity +/- buttons
+    document.querySelectorAll('.product-hero__qty').forEach(function (qtyWrap) {
+        var minus = qtyWrap.querySelector('.qty-minus');
+        var plus = qtyWrap.querySelector('.qty-plus');
+        var value = qtyWrap.querySelector('.qty-value');
+        if (!minus || !plus || !value) return;
+
+        minus.addEventListener('click', function () {
+            var current = parseInt(value.textContent) || 1;
+            if (current > 1) {
+                value.textContent = current - 1;
+            }
+        });
+
+        plus.addEventListener('click', function () {
+            var current = parseInt(value.textContent) || 1;
+            value.textContent = current + 1;
+        });
+    });
+
     // AJAX Add to Cart
     document.querySelectorAll('.ajax-add-to-cart').forEach(function (btn) {
         btn.addEventListener('click', function (e) {
@@ -57,18 +77,22 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!productId) return;
 
             var button = this;
+            var originalText = button.textContent;
             button.textContent = '...';
             button.style.pointerEvents = 'none';
 
-            var formData = new FormData();
-            formData.append('product_id', productId);
-            formData.append('quantity', 1);
+            // Get quantity from qty selector if present
+            var qtyValue = 1;
+            var qtyEl = document.querySelector('.qty-value');
+            if (qtyEl) {
+                qtyValue = parseInt(qtyEl.textContent) || 1;
+            }
 
             fetch('/?wc-ajax=add_to_cart', {
                 method: 'POST',
                 body: new URLSearchParams({
                     product_id: productId,
-                    quantity: 1,
+                    quantity: qtyValue,
                 }),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -95,12 +119,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
                 setTimeout(function () {
-                    button.textContent = '+';
+                    button.textContent = originalText;
                     button.style.pointerEvents = '';
                 }, 1500);
             })
             .catch(function () {
-                button.textContent = '+';
+                button.textContent = originalText;
                 button.style.pointerEvents = '';
             });
         });

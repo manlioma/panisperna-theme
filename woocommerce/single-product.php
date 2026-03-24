@@ -79,11 +79,7 @@ while (have_posts()) :
         </div>
     </div>
 
-    <!-- Chiedi in libreria -->
-    <a href="<?php echo esc_url(get_permalink(get_page_by_path('contatti'))); ?>" class="btn btn--pill product-hero__ask">
-        <span class="product-hero__ask-dot"></span>
-        Chiedi in libreria
-    </a>
+    </div>
 </section>
 
 <!-- Description -->

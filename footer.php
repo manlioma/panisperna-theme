@@ -89,6 +89,12 @@ $prefooter_link = panisperna_field('global_prefooter_link', 'option', '#');
     </div>
 </footer>
 
+<!-- Chat widget: Chiedi in libreria -->
+<a href="<?php echo esc_url(get_permalink(get_page_by_path('contatti'))); ?>" class="chat-widget" aria-label="Chiedi in libreria">
+    <span class="chat-widget__dot"></span>
+    <span>Chiedi in libreria</span>
+</a>
+
 <?php wp_footer(); ?>
 </body>
 </html>
