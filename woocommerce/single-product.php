@@ -16,27 +16,23 @@ while (have_posts()) :
     $is_bundle = $product->is_type('woosb');
 ?>
 
-<main class="site-main content-area">
-    <section class="section">
+<!-- Product Hero (dark bg) -->
+<section class="product-hero">
+    <div class="product-hero__inner content-area">
         <!-- Back link -->
-        <a href="javascript:history.back()" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:var(--space-3xl);font-size:var(--text-small);">
-            &larr; Indietro
+        <a href="javascript:history.back()" class="product-hero__back">
+            &larr; <span>Indietro</span>
         </a>
 
-        <!-- Product layout -->
-        <div class="product-single" style="display:flex;gap:var(--space-3xl);align-items:flex-start;">
+        <div class="product-hero__layout">
             <!-- Left: Info -->
-            <div class="product-single__info" style="flex:1;">
-                <h1 class="h1"><?php the_title(); ?></h1>
+            <div class="product-hero__info">
+                <h1 class="product-hero__title"><?php the_title(); ?></h1>
 
                 <?php if ($is_bundle) : ?>
-                    <!-- Bundle: description under title -->
-                    <p style="margin-top:var(--space-md);font-size:var(--text-body);">
-                        <?php echo wp_kses_post($product->get_short_description()); ?>
-                    </p>
+                    <p class="product-hero__desc"><?php echo wp_kses_post($product->get_short_description()); ?></p>
                 <?php else : ?>
-                    <!-- Libro: metadata fields -->
-                    <div class="product-single__meta" style="margin-top:var(--space-xl);display:flex;flex-direction:column;gap:var(--space-md);">
+                    <div class="product-hero__meta">
                         <?php
                         $meta_fields = [
                             'Autore/autrice' => $product->get_attribute('autore'),
@@ -47,46 +43,62 @@ while (have_posts()) :
                         foreach ($meta_fields as $label => $value) :
                             if (!$value) continue;
                         ?>
-                            <div>
-                                <span style="font-size:14px;color:var(--color-yellow);font-weight:600;display:block;"><?php echo esc_html($label); ?></span>
-                                <span style="font-size:var(--text-small);font-weight:600;"><?php echo esc_html($value); ?></span>
+                            <div class="product-hero__meta-item">
+                                <span class="product-hero__meta-label"><?php echo esc_html($label); ?></span>
+                                <span class="product-hero__meta-value"><?php echo esc_html($value); ?></span>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 
                 <!-- Price -->
-                <div style="margin-top:var(--space-xl);">
-                    <span style="font-size:var(--text-h3);font-weight:700;"><?php echo $product->get_price_html(); ?></span>
+                <div class="product-hero__price">
+                    <?php echo $product->get_price_html(); ?>
                 </div>
 
-                <!-- Add to cart -->
-                <div style="margin-top:var(--space-xl);display:flex;gap:var(--space-md);align-items:center;">
-                    <?php woocommerce_template_single_add_to_cart(); ?>
+                <!-- Add to cart buttons -->
+                <div class="product-hero__actions">
+                    <div class="product-hero__qty">
+                        <span>Quantità</span>
+                        <span class="product-hero__qty-controls">
+                            <button class="qty-minus">-</button>
+                            <span class="qty-value">1</span>
+                            <button class="qty-plus">+</button>
+                        </span>
+                    </div>
+                    <a href="<?php echo esc_url('?add-to-cart=' . get_the_ID()); ?>" class="product-hero__add-to-cart ajax-add-to-cart" data-product-id="<?php echo get_the_ID(); ?>">
+                        Aggiungi al carrello
+                    </a>
                 </div>
             </div>
 
             <!-- Right: Image -->
-            <div class="product-single__image" style="flex:0 0 45%;max-width:500px;">
-                <?php the_post_thumbnail('large', ['style' => 'width:100%;height:auto;']); ?>
+            <div class="product-hero__image">
+                <?php the_post_thumbnail('large'); ?>
             </div>
         </div>
+    </div>
 
-        <!-- "Chiedi in libreria" button -->
-        <div style="text-align:right;margin-top:var(--space-xl);">
-            <a href="<?php echo esc_url(get_permalink(get_page_by_path('contatti'))); ?>" class="btn btn--pill" style="gap:8px;">
-                <span style="width:10px;height:10px;border-radius:50%;background:var(--color-yellow);display:inline-block;"></span>
-                Chiedi in libreria
-            </a>
-        </div>
+    <!-- Chiedi in libreria -->
+    <a href="<?php echo esc_url(get_permalink(get_page_by_path('contatti'))); ?>" class="btn btn--pill product-hero__ask">
+        <span class="product-hero__ask-dot"></span>
+        Chiedi in libreria
+    </a>
+</section>
 
-        <!-- Description -->
-        <div style="margin-top:var(--space-5xl);">
-            <h2 class="h1" style="margin-bottom:var(--space-xl);">
-                <?php echo $is_bundle ? 'Descrizione del pacchetto' : 'Descrizione del libro'; ?>
-            </h2>
-            <div class="entry-content" style="max-width:700px;">
-                <?php the_content(); ?>
+<!-- Description -->
+<main class="site-main content-area">
+    <section class="section">
+        <div style="padding:32px 0;">
+            <div style="max-width:850px;background:white;">
+                <h2 class="h1">
+                    <?php echo $is_bundle ? 'Descrizione del pacchetto' : 'Descrizione del libro'; ?>
+                </h2>
+            </div>
+            <div style="max-width:751px;background:white;margin-top:var(--space-md);">
+                <div class="entry-content" style="font-family:var(--font-heading);font-size:24px;line-height:26px;letter-spacing:-0.456px;">
+                    <?php the_content(); ?>
+                </div>
             </div>
         </div>
 
@@ -98,21 +110,19 @@ while (have_posts()) :
                 $bundle_items = $product->get_items();
             }
             if (!empty($bundle_items)) : ?>
-                <div style="margin-top:var(--space-5xl);">
-                    <div class="book-carousel">
+                <div style="margin-top:var(--space-3xl);">
+                    <div class="book-carousel" style="padding:0;">
                         <?php foreach ($bundle_items as $item) :
                             $item_product = wc_get_product($item['id'] ?? $item);
                             if (!$item_product) continue;
                         ?>
                             <a href="<?php echo esc_url($item_product->get_permalink()); ?>" class="book-item">
                                 <div class="book-item__cover">
-                                    <?php echo $item_product->get_image('book-cover', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
+                                    <?php echo $item_product->get_image('book-cover'); ?>
                                 </div>
                                 <div>
                                     <h4 class="book-item__title"><?php echo esc_html($item_product->get_name()); ?></h4>
-                                    <p class="book-item__author">
-                                        <?php echo esc_html($item_product->get_attribute('autore')); ?>
-                                    </p>
+                                    <p class="book-item__author"><?php echo esc_html($item_product->get_attribute('autore')); ?></p>
                                     <p class="card__price"><?php echo $item_product->get_price_html(); ?></p>
                                 </div>
                             </a>
@@ -121,7 +131,6 @@ while (have_posts()) :
                 </div>
             <?php endif; ?>
         <?php endif; ?>
-
     </section>
 </main>
 
