@@ -1,2 +1,16 @@
 .planning/
+.playwright-mcp/
 .DS_Store
+.claude/
+PHOTO/
+loghi/
+prodotti/
+adobe-caslon-pro-webfont/
+panisperna-lda/
+image-import*
+*.fig
+*.pen
+*.zip
+*.jpg
+*.png
+730df618*
