@@ -610,3 +610,39 @@ add_action('acf/init', function () {
     ]);
 }, 20);
 
+/* --------------------------------------------------------------------------
+   INCONTRI — Prossimi: descrizione (scoped to /incontri page only)
+   -------------------------------------------------------------------------- */
+
+add_action('acf/init', function () {
+    $incontri = get_page_by_path('incontri');
+    if (!$incontri) {
+        return;
+    }
+
+    acf_add_local_field_group([
+        'key'    => 'group_incontri_prossimi',
+        'title'  => 'Incontri — Prossimi: descrizione',
+        'fields' => [
+            [
+                'key'   => 'field_prossimi_incontri_descrizione',
+                'label' => 'Descrizione "Prossimi incontri"',
+                'name'  => 'prossimi_incontri_descrizione',
+                'type'  => 'textarea',
+                'rows'  => 2,
+                'instructions' => 'Testo che appare sotto il titolo "Prossimi incontri" nella pagina /incontri. Lascia vuoto per nasconderlo.',
+            ],
+        ],
+        'location' => [
+            [
+                [
+                    'param'    => 'page',
+                    'operator' => '==',
+                    'value'    => $incontri->ID,
+                ],
+            ],
+        ],
+        'position' => 'normal',
+    ]);
+}, 20);
+

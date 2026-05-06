@@ -20,7 +20,12 @@ include locate_template('template-parts/hero-page.php');
     <section class="section">
         <div class="section-title">
             <h2 class="section-title__heading">Prossimi incontri</h2>
-            <p class="section-title__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            <?php
+            $prossimi_descrizione = $incontri_page ? panisperna_field('prossimi_incontri_descrizione', $incontri_page->ID) : '';
+            if ($prossimi_descrizione) :
+            ?>
+            <p class="section-title__description"><?php echo esc_html($prossimi_descrizione); ?></p>
+            <?php endif; ?>
         </div>
 
         <?php
