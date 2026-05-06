@@ -653,3 +653,14 @@ add_filter('woocommerce_add_to_cart_fragments', function ($fragments) {
 
     return $fragments;
 });
+
+/* --------------------------------------------------------------------------
+   FAVICON — theme-shipped, served from assets/images/
+   -------------------------------------------------------------------------- */
+
+add_action('wp_head', 'panisperna_print_favicon', 5);
+function panisperna_print_favicon() {
+    $url = get_template_directory_uri() . '/assets/images/panisperna-favicon.jpg';
+    echo '<link rel="icon" type="image/jpeg" href="' . esc_url($url) . '">' . "\n";
+    echo '<link rel="apple-touch-icon" href="' . esc_url($url) . '">' . "\n";
+}
