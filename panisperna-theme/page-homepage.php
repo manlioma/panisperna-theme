@@ -190,6 +190,24 @@ get_header(); ?>
     </section>
 
     <!-- PROSSIMI EVENTI -->
+    <?php
+    $eventi = new WP_Query([
+        'post_type'      => 'evento',
+        'posts_per_page' => 4,
+        'meta_key'       => 'evento_data',
+        'orderby'        => 'meta_value',
+        'order'          => 'ASC',
+        'meta_query'     => [
+            [
+                'key'     => 'evento_data',
+                'value'   => date('Ymd'),
+                'compare' => '>=',
+                'type'    => 'DATE',
+            ],
+        ],
+    ]);
+
+    if ($eventi->have_posts()) : ?>
     <section class="section" id="eventi">
         <div class="section-title">
             <span class="section-title__label">
@@ -203,32 +221,14 @@ get_header(); ?>
             </p>
         </div>
 
-        <?php
-        $eventi = new WP_Query([
-            'post_type'      => 'evento',
-            'posts_per_page' => 4,
-            'meta_key'       => 'evento_data',
-            'orderby'        => 'meta_value',
-            'order'          => 'ASC',
-            'meta_query'     => [
-                [
-                    'key'     => 'evento_data',
-                    'value'   => date('Ymd'),
-                    'compare' => '>=',
-                    'type'    => 'DATE',
-                ],
-            ],
-        ]);
-
-        if ($eventi->have_posts()) : ?>
-            <div class="cards-row cards-row--eventi">
-                <?php while ($eventi->have_posts()) : $eventi->the_post();
-                    get_template_part('template-parts/card-evento');
-                endwhile; ?>
-            </div>
-        <?php endif;
-        wp_reset_postdata(); ?>
+        <div class="cards-row cards-row--eventi">
+            <?php while ($eventi->have_posts()) : $eventi->the_post();
+                get_template_part('template-parts/card-evento');
+            endwhile; ?>
+        </div>
     </section>
+    <?php endif;
+    wp_reset_postdata(); ?>
 
     <!-- CONSIGLIATI DA VOI -->
     <section class="section" id="consigliati">
