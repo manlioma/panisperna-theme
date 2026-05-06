@@ -10,11 +10,12 @@ the_post();
 
 $data    = panisperna_field('evento_data');
 $ora     = panisperna_field('evento_ora');
-$luogo   = panisperna_field('evento_luogo', false, 'Libreria Panisperna 220');
 $libro   = panisperna_field('evento_libro');
 $gallery = panisperna_field('evento_gallery');
-$tipos   = get_the_terms(get_the_ID(), 'tipo_evento');
-$tag     = ($tipos && !is_wp_error($tipos)) ? $tipos[0]->name : '';
+
+$autore      = $libro ? get_post_meta((int) $libro, 'libro_autore', true) : '';
+$editore     = $libro ? get_post_meta((int) $libro, 'libro_editore', true) : '';
+$descrizione = get_the_excerpt();
 ?>
 
 <!-- Hero -->
@@ -24,21 +25,35 @@ $tag     = ($tipos && !is_wp_error($tipos)) ? $tipos[0]->name : '';
     </a>
     <div class="hero--page__content">
         <div class="hero--page__text">
-            <?php if ($tag) : ?>
-                <span class="h5"><?php echo esc_html($tag); ?></span>
-            <?php endif; ?>
-            <h1 class="h1" style="margin-top:var(--space-sm);"><?php the_title(); ?></h1>
-            <div class="consiglio-meta">
+            <div class="consiglio-meta consiglio-meta--evento">
                 <?php if ($data) : ?>
-                <div>
-                    <span class="consiglio-meta__label">Data e ora</span><br>
-                    <span class="consiglio-meta__value"><?php echo esc_html(panisperna_format_event_date($data)); ?><?php if ($ora) echo ', ore ' . esc_html($ora); ?></span>
-                </div>
+                    <div class="consiglio-meta__group">
+                        <span class="consiglio-meta__label">Data e ora</span>
+                        <p class="consiglio-meta__value"><?php echo esc_html(panisperna_format_event_date($data, true)); ?><?php if ($ora) echo ', ore ' . esc_html($ora); ?></p>
+                    </div>
                 <?php endif; ?>
-                <div>
-                    <span class="consiglio-meta__label">Luogo</span><br>
-                    <span class="consiglio-meta__value"><?php echo esc_html($luogo); ?></span>
+                <div class="consiglio-meta__group">
+                    <span class="consiglio-meta__label">Titolo</span>
+                    <h1 class="consiglio-meta__value consiglio-meta__value--title"><?php the_title(); ?></h1>
                 </div>
+                <?php if ($autore) : ?>
+                    <div class="consiglio-meta__group">
+                        <span class="consiglio-meta__label">Autore/Autrice</span>
+                        <p class="consiglio-meta__value"><?php echo esc_html($autore); ?></p>
+                    </div>
+                <?php endif; ?>
+                <?php if ($editore) : ?>
+                    <div class="consiglio-meta__group">
+                        <span class="consiglio-meta__label">Casa editrice</span>
+                        <p class="consiglio-meta__value"><?php echo esc_html($editore); ?></p>
+                    </div>
+                <?php endif; ?>
+                <?php if ($descrizione) : ?>
+                    <div class="consiglio-meta__group">
+                        <span class="consiglio-meta__label">Descrizione</span>
+                        <p class="consiglio-meta__value"><?php echo esc_html($descrizione); ?></p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
         <?php if (has_post_thumbnail()) : ?>

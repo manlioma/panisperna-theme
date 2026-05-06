@@ -236,15 +236,17 @@ function panisperna_field($field, $post_id = false, $fallback = '') {
 }
 
 /**
- * Format event date: "Mar 06 Apr"
+ * Format event date: "Mar 06 Apr" or, with $long=true, "Mar 06 Aprile"
  */
-function panisperna_format_event_date($date_str) {
+function panisperna_format_event_date($date_str, $long = false) {
     if (!$date_str) return '';
     $date = DateTime::createFromFormat('d/m/Y', $date_str);
     if (!$date) return $date_str;
     $days_it = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-    $months_it = ['', 'Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
-    return $days_it[(int)$date->format('w')] . ' ' . $date->format('d') . ' ' . $months_it[(int)$date->format('n')];
+    $months_short = ['', 'Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+    $months_long  = ['', 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+    $months = $long ? $months_long : $months_short;
+    return $days_it[(int)$date->format('w')] . ' ' . $date->format('d') . ' ' . $months[(int)$date->format('n')];
 }
 
 /**
