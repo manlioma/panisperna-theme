@@ -1373,6 +1373,9 @@ main,
 
 .contatti-layout__intro {
     flex: 0 0 30%;
+    background: #fff;
+    border-radius: 24px;
+    padding: var(--space-3xl);
 }
 
 .contatti-layout__form {
@@ -3141,6 +3144,12 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
 
     /* Form area: reduce border-radius on small screens */
     .contatti-form-area {
+        border-radius: 16px;
+        padding: 24px;
+    }
+
+    /* Intro card: mirror form-area mobile radius/padding */
+    .contatti-layout__intro {
         border-radius: 16px;
         padding: 24px;
     }
