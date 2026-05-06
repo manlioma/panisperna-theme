@@ -1,6 +1,8 @@
 <?php
 /**
- * Contatti form handler — Brevo Transactional Email integration
+ * Contatti form handler — uses wp_mail() so delivery flows through whatever
+ * SMTP/relay WooCommerce already has configured (currently the
+ * woocommerce-sendinblue-newsletter-subscription / Brevo plugin).
  *
  * @package Panisperna
  */
@@ -43,7 +45,7 @@ function panisperna_contact_handler() {
         return;
     }
 
-    $result = panisperna_contact_send_brevo($nome, $cognome, $email, $messaggio);
+    $result = panisperna_contact_send_mail($nome, $cognome, $email, $messaggio);
 
     if (true === $result) {
         wp_send_json_success(['ok' => true, 'message' => 'Grazie! Il tuo messaggio e stato inviato.']);
@@ -57,46 +59,32 @@ function panisperna_contact_handler() {
 }
 
 /* --------------------------------------------------------------------------
-   BREVO SEND
+   SEND via wp_mail() — picked up by the Brevo SMTP plugin already wired to WC
    -------------------------------------------------------------------------- */
 
-function panisperna_contact_send_brevo($nome, $cognome, $email, $messaggio) {
-    $api_key = get_option('panisperna_brevo_api_key', '');
-    if (!$api_key) {
-        return new WP_Error('no_key', 'Brevo API key missing in option panisperna_brevo_api_key');
-    }
+function panisperna_contact_send_mail($nome, $cognome, $email, $messaggio) {
+    $recipient    = get_option('panisperna_contatti_recipient', 'mmanlio@gmail.com');
+    $sender_name  = 'Libreria Panisperna 220';
+    $sender_email = 'info@libreriapanisperna220.it';
+    $full_name    = trim($nome . ' ' . $cognome);
 
-    $recipient = get_option('panisperna_contatti_recipient', 'mmanlio@gmail.com');
+    $subject = 'Nuovo messaggio dal sito - ' . $full_name;
 
-    $body = [
-        'sender'  => [ 'name' => 'Libreria Panisperna 220', 'email' => 'noreply@panisperna220.it' ],
-        'to'      => [ [ 'email' => $recipient ] ],
-        'replyTo' => [ 'email' => $email, 'name' => trim($nome . ' ' . $cognome) ],
-        'subject' => 'Nuovo messaggio dal sito - ' . $nome . ' ' . $cognome,
-        'htmlContent' => '<p><strong>Da:</strong> ' . esc_html($nome . ' ' . $cognome) . ' &lt;' . esc_html($email) . '&gt;</p>'
-                       . '<p><strong>Messaggio:</strong></p><p>' . nl2br(esc_html($messaggio)) . '</p>',
+    $body = '<p><strong>Da:</strong> ' . esc_html($full_name) . ' &lt;' . esc_html($email) . '&gt;</p>'
+          . '<p><strong>Messaggio:</strong></p><p>' . nl2br(esc_html($messaggio)) . '</p>';
+
+    $headers = [
+        'Content-Type: text/html; charset=UTF-8',
+        'From: ' . $sender_name . ' <' . $sender_email . '>',
+        'Reply-To: ' . $full_name . ' <' . $email . '>',
     ];
 
-    $response = wp_remote_post('https://api.brevo.com/v3/smtp/email', [
-        'timeout' => 15,
-        'headers' => [
-            'api-key'      => $api_key,
-            'accept'       => 'application/json',
-            'content-type' => 'application/json',
-        ],
-        'body' => wp_json_encode($body),
-    ]);
+    $sent = wp_mail($recipient, $subject, $body, $headers);
 
-    if (is_wp_error($response)) {
-        return $response;
+    if (!$sent) {
+        return new WP_Error('wp_mail_failed', 'wp_mail() returned false for recipient ' . $recipient);
     }
-
-    $code = wp_remote_retrieve_response_code($response);
-    if ($code >= 200 && $code < 300) {
-        return true;
-    }
-
-    return new WP_Error('brevo_http_' . $code, wp_remote_retrieve_body($response));
+    return true;
 }
 
 /* --------------------------------------------------------------------------
@@ -145,7 +133,7 @@ function panisperna_contact_no_js_handler() {
         exit;
     }
 
-    $result = panisperna_contact_send_brevo($nome, $cognome, $email, $messaggio);
+    $result = panisperna_contact_send_mail($nome, $cognome, $email, $messaggio);
     if (is_wp_error($result)) {
         error_log('[panisperna_contact] ' . $result->get_error_message());
     }
