@@ -63,7 +63,7 @@ function panisperna_contact_handler() {
    -------------------------------------------------------------------------- */
 
 function panisperna_contact_send_mail($nome, $cognome, $email, $messaggio) {
-    $recipient    = get_option('panisperna_contatti_recipient', 'mmanlio@gmail.com');
+    $recipient    = get_option('panisperna_contatti_recipient', 'info@libreriapanisperna220.it');
     $sender_name  = 'Libreria Panisperna 220';
     $sender_email = 'info@libreriapanisperna220.it';
     $full_name    = trim($nome . ' ' . $cognome);
