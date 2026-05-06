@@ -169,6 +169,20 @@ acf_add_local_field_group([
             'default_value' => 'Libreria Panisperna 220',
         ],
         [
+            'key'   => 'field_evento_autore',
+            'label' => 'Autore/Autrice',
+            'name'  => 'evento_autore',
+            'type'  => 'text',
+            'instructions' => 'Sovrascrive l\'autore del libro collegato. Lascia vuoto per usare l\'autore del libro.',
+        ],
+        [
+            'key'   => 'field_evento_editore',
+            'label' => 'Casa editrice',
+            'name'  => 'evento_editore',
+            'type'  => 'text',
+            'instructions' => 'Sovrascrive l\'editore del libro collegato. Lascia vuoto per usare l\'editore del libro.',
+        ],
+        [
             'key'   => 'field_evento_libro',
             'label' => 'Libro collegato',
             'name'  => 'evento_libro',

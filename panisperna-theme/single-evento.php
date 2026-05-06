@@ -13,8 +13,12 @@ $ora     = panisperna_field('evento_ora');
 $libro   = panisperna_field('evento_libro');
 $gallery = panisperna_field('evento_gallery');
 
-$autore      = $libro ? get_post_meta((int) $libro, 'libro_autore', true) : '';
-$editore     = $libro ? get_post_meta((int) $libro, 'libro_editore', true) : '';
+$autore  = panisperna_field('evento_autore');
+$editore = panisperna_field('evento_editore');
+if ($libro) {
+    if (!$autore)  $autore  = get_post_meta((int) $libro, 'libro_autore', true);
+    if (!$editore) $editore = get_post_meta((int) $libro, 'libro_editore', true);
+}
 $descrizione = get_the_excerpt();
 ?>
 
