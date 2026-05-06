@@ -21,7 +21,15 @@ include locate_template('template-parts/hero-page.php');
             </div>
             <div class="contatti-layout__form">
                 <div class="contatti-form-area">
+                    <?php echo function_exists('panisperna_contact_notice') ? panisperna_contact_notice() : ''; ?>
                 <form class="contact-form" method="post" action="">
+                        <?php wp_nonce_field('panisperna_contact_nonce', 'panisperna_contact_nonce'); ?>
+                        <input type="hidden" name="panisperna_contact_submit" value="1">
+                        <!-- honeypot -->
+                        <p class="contact-form__hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+                            <label for="cf-website">Website (lascia vuoto)</label>
+                            <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" value="">
+                        </p>
                     <div class="contact-form__row">
                         <div class="contact-form__field">
                             <label for="cf-nome">Nome</label>

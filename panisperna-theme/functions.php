@@ -266,6 +266,7 @@ function panisperna_icon($name) {
 
 // ACF Field Groups (registered in PHP for version control)
 require_once PANISPERNA_DIR . '/inc/acf-fields.php';
+require_once PANISPERNA_DIR . '/inc/contact-form.php';
 
 /* --------------------------------------------------------------------------
    8. NAV LINKS — add data-text for bold-hover trick
@@ -664,3 +665,24 @@ function panisperna_print_favicon() {
     echo '<link rel="icon" type="image/jpeg" href="' . esc_url($url) . '">' . "\n";
     echo '<link rel="apple-touch-icon" href="' . esc_url($url) . '">' . "\n";
 }
+
+/* --------------------------------------------------------------------------
+   12. CONTATTI — enqueue contact-form.js + localize ajax data
+   -------------------------------------------------------------------------- */
+
+add_action('wp_enqueue_scripts', function () {
+    if (!is_page_template('page-contatti.php')) {
+        return;
+    }
+    wp_enqueue_script(
+        'panisperna-contact-form',
+        PANISPERNA_URI . '/assets/js/contact-form.js',
+        [],
+        PANISPERNA_VERSION,
+        true
+    );
+    wp_localize_script('panisperna-contact-form', 'panisperna_contact_data', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('panisperna_contact_nonce'),
+    ]);
+});
