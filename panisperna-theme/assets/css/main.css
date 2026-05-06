@@ -3494,3 +3494,12 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
         max-height: max-content;
     }
 }
+
+/* ==========================================================================
+   PHASE 11 — Eventi empty state
+   ========================================================================== */
+
+.eventi-empty {
+    text-align: center;
+    margin: var(--space-xl) 0;
+}

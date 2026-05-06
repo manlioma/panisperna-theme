@@ -56,7 +56,7 @@ include locate_template('template-parts/hero-page.php');
                 endwhile; ?>
             </div>
         <?php else : ?>
-            <p>Nessun evento in programma.</p>
+            <p class="eventi-empty">Nessun evento in programma.</p>
         <?php endif;
         wp_reset_postdata(); ?>
     </section>
