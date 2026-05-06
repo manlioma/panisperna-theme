@@ -169,6 +169,14 @@ acf_add_local_field_group([
             'default_value' => 'Libreria Panisperna 220',
         ],
         [
+            'key'   => 'field_evento_descrizione',
+            'label' => 'Descrizione breve',
+            'name'  => 'evento_descrizione',
+            'type'  => 'textarea',
+            'rows'  => 3,
+            'instructions' => 'Riassunto mostrato nella card e nella hero della singola. Il contenuto esteso va nell\'editor.',
+        ],
+        [
             'key'   => 'field_evento_autore',
             'label' => 'Autore/Autrice',
             'name'  => 'evento_autore',

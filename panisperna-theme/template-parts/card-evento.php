@@ -11,7 +11,7 @@
 $tipos = get_the_terms(get_the_ID(), 'tipo_evento');
 $tag   = ($tipos && !is_wp_error($tipos)) ? $tipos[0]->name : '';
 
-$descrizione = get_the_excerpt();
+$descrizione = panisperna_field('evento_descrizione');
 ?>
 <div class="event-card-wrap">
     <a href="<?php the_permalink(); ?>" class="event-card">

@@ -19,7 +19,7 @@ if ($libro) {
     if (!$autore)  $autore  = get_post_meta((int) $libro, 'libro_autore', true);
     if (!$editore) $editore = get_post_meta((int) $libro, 'libro_editore', true);
 }
-$descrizione = get_the_excerpt();
+$descrizione = panisperna_field('evento_descrizione');
 ?>
 
 <!-- Hero -->
@@ -70,11 +70,13 @@ $descrizione = get_the_excerpt();
 
 <main class="site-main content-area">
     <!-- Contenuto libero -->
+    <?php if (trim(get_the_content()) !== '') : ?>
     <section class="consiglio-content">
         <div class="entry-content" style="max-width:751px;">
             <?php the_content(); ?>
         </div>
     </section>
+    <?php endif; ?>
 
     <!-- Libro collegato -->
     <?php if ($libro) :
