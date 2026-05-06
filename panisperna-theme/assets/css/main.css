@@ -3030,6 +3030,7 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
     .section-title {
         max-width: 100%;
         padding: 0 var(--content-padding);
+        margin: 20px 0;
     }
 
     /* Incontri: event card image height when stacked */
