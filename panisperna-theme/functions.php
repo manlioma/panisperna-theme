@@ -452,10 +452,22 @@ function panisperna_eventi_handler() {
     $page     = absint($_POST['page'] ?? 1);
     $per_page = 8;
 
+    $today = date('Ymd');
     $args = [
         'post_type'      => 'evento',
         'posts_per_page' => $per_page,
         'paged'          => $page,
+        'meta_key'       => 'evento_data',
+        'orderby'        => 'meta_value',
+        'order'          => 'DESC',
+        'meta_query'     => [
+            [
+                'key'     => 'evento_data',
+                'value'   => $today,
+                'compare' => '<',
+                'type'    => 'DATE',
+            ],
+        ],
     ];
 
     if ($category && $category !== 'tutti') {

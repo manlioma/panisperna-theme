@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Eventi (Incontri) — Filter chips + Load more (PH8-INCONTRI)
     var eventiChips = document.querySelectorAll('.btn--chip-evento');
-    var eventiGrid = document.querySelector('.cards-row--eventi');
+    var eventiGrid = document.querySelector('.cards-row--eventi--archive');
     var eventiLoadMore = document.getElementById('evento-load-more');
 
     if (eventiChips.length && eventiGrid) {
