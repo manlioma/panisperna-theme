@@ -518,3 +518,67 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 500);
 });
+
+/* --------------------------------------------------------------------------
+   Phase 12 (JS-only) — Home mobile sliders for pacchetti, books, consigli.
+   Runs only at ≤768px AND only if the source grids exist on the current page.
+   Wraps each grid's children in .swiper-slide, then wraps the grid itself in
+   a .swiper container, then inits Swiper. Desktop DOM is never touched.
+   -------------------------------------------------------------------------- */
+(function () {
+    if (typeof Swiper === 'undefined') return;
+    if (window.innerWidth > 768) return;
+
+    var configs = [
+        { selector: '#pacchetti .cards-grid.cards-grid--pacchetti', modifier: 'pacchetti' },
+        { selector: '#letti-da-noi .book-grid',                     modifier: 'books' },
+        { selector: '#consigliati .cards-grid',                     modifier: 'consigli' },
+    ];
+
+    function initOne(grid, modifier) {
+        // Skip if already transformed
+        if (grid.dataset.homeMobileSwiper === '1') return;
+        grid.dataset.homeMobileSwiper = '1';
+
+        // Wrap each direct child in a .swiper-slide
+        var children = Array.prototype.slice.call(grid.children);
+        children.forEach(function (child) {
+            var slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+            grid.replaceChild(slide, child);
+            slide.appendChild(child);
+        });
+
+        // Wrap the grid in a .swiper container, mark grid as .swiper-wrapper
+        var swiperEl = document.createElement('div');
+        swiperEl.className = 'swiper home-mobile-swiper home-mobile-swiper--' + modifier;
+        grid.parentNode.insertBefore(swiperEl, grid);
+        grid.classList.add('swiper-wrapper');
+        swiperEl.appendChild(grid);
+
+        // Init Swiper with peek + no pagination/nav/autoplay
+        new Swiper(swiperEl, {
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            slidesPerGroup: 1,
+            spaceBetween: 16,
+            grabCursor: true,
+            preventClicks: false,
+            preventClicksPropagation: false,
+        });
+    }
+
+    function runIfMobile() {
+        if (window.innerWidth > 768) return;
+        configs.forEach(function (cfg) {
+            var grid = document.querySelector(cfg.selector);
+            if (grid) initOne(grid, cfg.modifier);
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runIfMobile);
+    } else {
+        runIfMobile();
+    }
+})();

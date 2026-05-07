@@ -3509,3 +3509,107 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
         overflow-x: hidden;
     }
 }
+
+/* ==========================================================================
+   PHASE 12 — Home mobile sliders (mobile-only; DOM injected by JS)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .home-mobile-swiper {
+        width: 100%;
+        padding: 0 11vw; /* side peek of adjacent slides */
+        overflow: visible;
+    }
+
+    /* When JS injects .swiper-wrapper onto an existing grid, neutralise the grid
+       layout so Swiper's flex row can take over. */
+    .home-mobile-swiper > .swiper-wrapper {
+        display: flex;
+        grid-template-columns: none;
+        gap: 0;
+    }
+
+    .home-mobile-swiper .swiper-slide {
+        width: 78vw;
+        max-width: 320px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    .home-mobile-swiper--pacchetti .swiper-slide {
+        width: 80vw;
+        max-width: 340px;
+    }
+}
+
+/* ==========================================================================
+   PHASE 12 — WooCommerce typography + order actions
+   ========================================================================== */
+
+.woocommerce-notices-wrapper {
+    font-family: var(--font-body);
+    font-size: 16px;
+}
+
+.woocommerce-MyAccount-content {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+}
+
+td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions {
+    display: flex;
+    gap: 4px;
+}
+
+/* ==========================================================================
+   PHASE 12 — WC notices: ensure visibility on cart/checkout/account
+   so failed payments / errors don't go unnoticed
+   ========================================================================== */
+
+.woocommerce-notices-wrapper:empty {
+    display: none;
+}
+
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-info {
+    display: block;
+    margin: 0 0 16px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    border-left: 4px solid;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.4;
+    list-style: none;
+}
+
+.woocommerce-message {
+    background: #e8f5e9;
+    border-left-color: #2e7d32;
+    color: #1b5e20;
+}
+
+.woocommerce-error {
+    background: #fdecea;
+    border-left-color: #c62828;
+    color: #8e1c1c;
+}
+
+.woocommerce-error li {
+    list-style: none;
+    margin: 0;
+}
+
+.woocommerce-info {
+    background: #fff8e1;
+    border-left-color: #f9a825;
+    color: #6d4c00;
+}
+
+.woocommerce-message a,
+.woocommerce-error a,
+.woocommerce-info a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: 600;
+}
