@@ -3523,10 +3523,13 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
 
     /* When JS injects .swiper-wrapper onto an existing grid, neutralise the
        grid layout so Swiper's flex row can take over. !important defeats the
-       existing .cards-grid.cards-grid--pacchetti { display:grid } rule which
-       has equal specificity and would otherwise win on edge browsers. */
+       existing .cards-grid.cards-grid--pacchetti { display:grid } and any
+       other equal-specificity rule. flex-direction:row defeats Swiper's own
+       .swiper-vertical default if applied. */
     .home-mobile-swiper > .swiper-wrapper {
         display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
         grid-template-columns: none !important;
         gap: 0 !important;
         margin: 0 !important;
@@ -3535,9 +3538,10 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
     .home-mobile-swiper .swiper-slide {
         width: 78vw !important;
         max-width: 320px;
-        height: auto;
+        height: auto !important;
         flex-shrink: 0 !important;
         min-width: 0 !important;
+        display: block !important;
     }
 
     .home-mobile-swiper--pacchetti .swiper-slide {

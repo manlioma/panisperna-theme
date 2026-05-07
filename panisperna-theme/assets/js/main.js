@@ -549,12 +549,24 @@ document.addEventListener('DOMContentLoaded', function () {
             slide.appendChild(child);
         });
 
-        // Wrap the grid in a .swiper container, mark grid as .swiper-wrapper
+        // Wrap the grid in a .swiper container. STRIP the original grid classes
+        // (cards-grid, cards-grid--pacchetti, book-grid) so they can't fight
+        // Swiper's flex layout via cascade. The card styling inside slides is
+        // self-contained (.card.card--pacchetto etc) — losing the grid parent
+        // class doesn't break card visuals.
         var swiperEl = document.createElement('div');
         swiperEl.className = 'swiper home-mobile-swiper home-mobile-swiper--' + modifier;
         grid.parentNode.insertBefore(swiperEl, grid);
+        grid.classList.remove('cards-grid', 'cards-grid--pacchetti', 'cards-grid--collezione', 'cards-grid--consiglio', 'book-grid');
         grid.classList.add('swiper-wrapper');
         swiperEl.appendChild(grid);
+
+        // Force inline layout so nothing from the original CSS can win the cascade
+        grid.style.display = 'flex';
+        grid.style.flexDirection = 'row';
+        grid.style.flexWrap = 'nowrap';
+        grid.style.gridTemplateColumns = 'none';
+        grid.style.gap = '0';
 
         // Defer init to next frame so the browser applies the new CSS
         // (display:flex via .home-mobile-swiper > .swiper-wrapper) BEFORE
