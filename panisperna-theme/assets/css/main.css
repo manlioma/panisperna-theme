@@ -3503,3 +3503,13 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
     text-align: center;
     margin: var(--space-xl) 0;
 }
+
+/* ==========================================================================
+   PHASE 11 — Mobile: prevent horizontal scroll
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+}
