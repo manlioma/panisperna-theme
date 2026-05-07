@@ -3049,20 +3049,15 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
    PHASE 9 — MOBILE: Single Consiglio
    ========================================================================== */
 @media (max-width: 768px) {
-    /* Card consiglio: auto height, show expanded content by default */
+    /* Card consiglio: auto height; on mobile show only the default (name),
+       hide the hover-expanded panel entirely (no hover on touch). */
     .card--consiglio {
         height: auto;
         min-height: 300px;
     }
 
-    .card--consiglio__default {
-        display: none;
-    }
-
     .card--consiglio__expanded {
-        max-height: none;
-        opacity: 1;
-        position: relative;
+        display: none;
     }
 
     /* Vertical video: cap height to prevent full-screen takeover */
