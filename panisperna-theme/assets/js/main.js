@@ -518,3 +518,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 500);
 });
+
+/* --------------------------------------------------------------------------
+   Phase 12 — Home mobile sliders (3 grids: pacchetti, books, consigli)
+   -------------------------------------------------------------------------- */
+(function () {
+    if (typeof Swiper === 'undefined') return;
+
+    var targets = [
+        '.home-mobile-swiper--pacchetti',
+        '.home-mobile-swiper--books',
+        '.home-mobile-swiper--consigli',
+    ];
+
+    targets.forEach(function (sel) {
+        var el = document.querySelector(sel);
+        if (!el) return;
+
+        new Swiper(el, {
+            enabled: false,
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            slidesPerGroup: 1,
+            spaceBetween: 16,
+            grabCursor: true,
+            preventClicks: false,
+            preventClicksPropagation: false,
+            breakpoints: {
+                0: {
+                    enabled: true,
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                },
+                769: {
+                    enabled: false,
+                },
+            },
+        });
+    });
+})();

@@ -3508,3 +3508,57 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
         overflow-x: hidden;
     }
 }
+
+/* ==========================================================================
+   PHASE 12 — Home mobile sliders (3 grids, ≤768px only)
+   ========================================================================== */
+
+/* Desktop & tablet (>768px): Swiper container is a passive wrapper.
+   The .swiper-wrapper still carries the original grid classes, so existing
+   .cards-grid / .book-grid CSS keeps rendering. Override Swiper's default
+   display:flex on .swiper-wrapper and cancel any runtime transform. */
+.home-mobile-swiper {
+    width: 100%;
+    overflow: visible; /* allow side-peek on mobile; harmless on desktop */
+}
+
+.home-mobile-swiper > .swiper-wrapper {
+    display: grid;
+    transform: none !important;
+}
+
+.home-mobile-swiper .swiper-slide {
+    width: auto;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    /* Mobile: Swiper takes over. Re-enable flex layout on the wrapper. */
+    .home-mobile-swiper > .swiper-wrapper {
+        display: flex;
+        transform: none; /* no !important — Swiper sets it dynamically */
+    }
+
+    .home-mobile-swiper .swiper-slide {
+        width: 78vw;
+        max-width: 320px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    /* Pacchetti slides slightly wider (taller cards) */
+    .home-mobile-swiper--pacchetti .swiper-slide {
+        width: 80vw;
+        max-width: 340px;
+    }
+
+    /* Side padding on the container produces the peek of adjacent slides */
+    .home-mobile-swiper {
+        padding: 0 11vw;
+    }
+
+    /* Spacing between consecutive slides */
+    .home-mobile-swiper .swiper-slide + .swiper-slide {
+        margin-left: 16px;
+    }
+}
