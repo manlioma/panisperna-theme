@@ -3518,25 +3518,30 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
         width: 100%;
         padding: 0 11vw; /* side peek of adjacent slides */
         overflow: visible;
+        margin: 0;
     }
 
-    /* When JS injects .swiper-wrapper onto an existing grid, neutralise the grid
-       layout so Swiper's flex row can take over. */
+    /* When JS injects .swiper-wrapper onto an existing grid, neutralise the
+       grid layout so Swiper's flex row can take over. !important defeats the
+       existing .cards-grid.cards-grid--pacchetti { display:grid } rule which
+       has equal specificity and would otherwise win on edge browsers. */
     .home-mobile-swiper > .swiper-wrapper {
-        display: flex;
-        grid-template-columns: none;
-        gap: 0;
+        display: flex !important;
+        grid-template-columns: none !important;
+        gap: 0 !important;
+        margin: 0 !important;
     }
 
     .home-mobile-swiper .swiper-slide {
-        width: 78vw;
+        width: 78vw !important;
         max-width: 320px;
         height: auto;
-        flex-shrink: 0;
+        flex-shrink: 0 !important;
+        min-width: 0 !important;
     }
 
     .home-mobile-swiper--pacchetti .swiper-slide {
-        width: 80vw;
+        width: 80vw !important;
         max-width: 340px;
     }
 }

@@ -556,15 +556,22 @@ document.addEventListener('DOMContentLoaded', function () {
         grid.classList.add('swiper-wrapper');
         swiperEl.appendChild(grid);
 
-        // Init Swiper with peek + no pagination/nav/autoplay
-        new Swiper(swiperEl, {
-            slidesPerView: 'auto',
-            centeredSlides: true,
-            slidesPerGroup: 1,
-            spaceBetween: 16,
-            grabCursor: true,
-            preventClicks: false,
-            preventClicksPropagation: false,
+        // Defer init to next frame so the browser applies the new CSS
+        // (display:flex via .home-mobile-swiper > .swiper-wrapper) BEFORE
+        // Swiper measures slide widths. Without this defer, Swiper sometimes
+        // computes against the still-grid layout and produces broken sliders.
+        requestAnimationFrame(function () {
+            new Swiper(swiperEl, {
+                slidesPerView: 'auto',
+                centeredSlides: true,
+                slidesPerGroup: 1,
+                spaceBetween: 16,
+                grabCursor: true,
+                preventClicks: false,
+                preventClicksPropagation: false,
+                observer: true,
+                observeParents: true,
+            });
         });
     }
 
