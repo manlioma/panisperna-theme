@@ -114,28 +114,24 @@ get_header(); ?>
         $remaining = new WP_Query($remaining_args);
 
         if ($remaining->have_posts()) : ?>
-            <div class="swiper home-mobile-swiper home-mobile-swiper--pacchetti">
-                <div class="swiper-wrapper cards-grid cards-grid--pacchetti">
-                    <?php while ($remaining->have_posts()) : $remaining->the_post();
-                        $product = wc_get_product(get_the_ID());
-                    ?>
-                        <div class="swiper-slide">
-                            <div class="card card--pacchetto">
-                                <a href="<?php the_permalink(); ?>" class="card--pacchetto__image">
-                                    <?php the_post_thumbnail('card-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
-                                </a>
-                                <div class="card__body">
-                                    <h4 class="card__title"><?php the_title(); ?></h4>
-                                    <div class="card__meta">
-                                        <span class="card__price"><?php echo $product->get_price_html(); ?></span>
-                                        <a href="<?php echo esc_url('?add-to-cart=' . get_the_ID()); ?>" class="btn--icon ajax-add-to-cart" data-product-id="<?php echo get_the_ID(); ?>">+</a>
-                                    </div>
-                                </div>
-                                <div class="card__dot"></div>
+            <div class="cards-grid cards-grid--pacchetti">
+                <?php while ($remaining->have_posts()) : $remaining->the_post();
+                    $product = wc_get_product(get_the_ID());
+                ?>
+                    <div class="card card--pacchetto">
+                        <a href="<?php the_permalink(); ?>" class="card--pacchetto__image">
+                            <?php the_post_thumbnail('card-thumb', ['style' => 'width:100%;height:100%;object-fit:cover;']); ?>
+                        </a>
+                        <div class="card__body">
+                            <h4 class="card__title"><?php the_title(); ?></h4>
+                            <div class="card__meta">
+                                <span class="card__price"><?php echo $product->get_price_html(); ?></span>
+                                <a href="<?php echo esc_url('?add-to-cart=' . get_the_ID()); ?>" class="btn--icon ajax-add-to-cart" data-product-id="<?php echo get_the_ID(); ?>">+</a>
                             </div>
                         </div>
-                    <?php endwhile; ?>
-                </div>
+                        <div class="card__dot"></div>
+                    </div>
+                <?php endwhile; ?>
             </div>
         <?php endif;
         wp_reset_postdata(); ?>
@@ -171,28 +167,24 @@ get_header(); ?>
         }
 
         if ($letti_ids) : ?>
-            <div class="swiper home-mobile-swiper home-mobile-swiper--books">
-                <div class="swiper-wrapper book-grid">
-                    <?php foreach ($letti_ids as $pid) :
-                        $product = wc_get_product($pid);
-                        if (!$product) continue;
-                    ?>
-                        <div class="swiper-slide">
-                            <a href="<?php echo get_permalink($pid); ?>" class="book-item">
-                                <div class="book-item__cover">
-                                    <?php echo get_the_post_thumbnail($pid, 'large'); ?>
-                                </div>
-                                <div class="book-item__info">
-                                    <h4 class="book-item__title"><?php echo get_the_title($pid); ?></h4>
-                                    <?php $autore = $product->get_attribute('autore'); ?>
-                                    <?php if ($autore) : ?>
-                                        <p class="book-item__author"><?php echo esc_html($autore); ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </a>
+            <div class="book-grid">
+                <?php foreach ($letti_ids as $pid) :
+                    $product = wc_get_product($pid);
+                    if (!$product) continue;
+                ?>
+                    <a href="<?php echo get_permalink($pid); ?>" class="book-item">
+                        <div class="book-item__cover">
+                            <?php echo get_the_post_thumbnail($pid, 'large'); ?>
                         </div>
-                    <?php endforeach; ?>
-                </div>
+                        <div class="book-item__info">
+                            <h4 class="book-item__title"><?php echo get_the_title($pid); ?></h4>
+                            <?php $autore = $product->get_attribute('autore'); ?>
+                            <?php if ($autore) : ?>
+                                <p class="book-item__author"><?php echo esc_html($autore); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
             </div>
         <?php endif; ?>
     </section>
@@ -259,14 +251,10 @@ get_header(); ?>
         ]);
 
         if ($consigli->have_posts()) : ?>
-            <div class="swiper home-mobile-swiper home-mobile-swiper--consigli">
-                <div class="swiper-wrapper cards-grid">
-                    <?php while ($consigli->have_posts()) : $consigli->the_post(); ?>
-                        <div class="swiper-slide">
-                            <?php get_template_part('template-parts/card-consiglio'); ?>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
+            <div class="cards-grid">
+                <?php while ($consigli->have_posts()) : $consigli->the_post();
+                    get_template_part('template-parts/card-consiglio');
+                endwhile; ?>
             </div>
         <?php endif;
         wp_reset_postdata(); ?>
