@@ -673,8 +673,8 @@ add_filter('woocommerce_add_to_cart_fragments', function ($fragments) {
 
 add_action('wp_head', 'panisperna_print_favicon', 5);
 function panisperna_print_favicon() {
-    $url = get_template_directory_uri() . '/assets/images/panisperna-favicon.jpg';
-    echo '<link rel="icon" type="image/jpeg" href="' . esc_url($url) . '">' . "\n";
+    $url = get_template_directory_uri() . '/assets/images/panisperna-favicon.svg';
+    echo '<link rel="icon" type="image/svg+xml" href="' . esc_url($url) . '">' . "\n";
     echo '<link rel="apple-touch-icon" href="' . esc_url($url) . '">' . "\n";
 }
 
