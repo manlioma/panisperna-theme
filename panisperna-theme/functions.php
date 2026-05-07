@@ -78,7 +78,10 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11');
     wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11', true);
 
-    wp_enqueue_style('panisperna-main', PANISPERNA_URI . '/assets/css/main.css', ['swiper'], PANISPERNA_VERSION);
+    $main_css_ver = file_exists(PANISPERNA_DIR . '/assets/css/main.css') ? filemtime(PANISPERNA_DIR . '/assets/css/main.css') : PANISPERNA_VERSION;
+    $main_js_ver  = file_exists(PANISPERNA_DIR . '/assets/js/main.js') ? filemtime(PANISPERNA_DIR . '/assets/js/main.js') : PANISPERNA_VERSION;
+
+    wp_enqueue_style('panisperna-main', PANISPERNA_URI . '/assets/css/main.css', ['swiper'], $main_css_ver);
     wp_enqueue_style('panisperna-style', get_stylesheet_uri(), ['panisperna-main'], PANISPERNA_VERSION);
 
     // Ensure WC cart fragments are loaded on every page (not just cart/checkout)
@@ -86,7 +89,7 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_script('wc-cart-fragments');
     }
 
-    wp_enqueue_script('panisperna-main', PANISPERNA_URI . '/assets/js/main.js', ['swiper', 'jquery', 'wc-cart-fragments'], PANISPERNA_VERSION, true);
+    wp_enqueue_script('panisperna-main', PANISPERNA_URI . '/assets/js/main.js', ['swiper', 'jquery', 'wc-cart-fragments'], $main_js_ver, true);
 
     wp_localize_script('panisperna-main', 'panisperna_ajax', [
         'ajax_url' => admin_url('admin-ajax.php'),
@@ -686,11 +689,12 @@ add_action('wp_enqueue_scripts', function () {
     if (!is_page_template('page-contatti.php')) {
         return;
     }
+    $cf_ver = file_exists(PANISPERNA_DIR . '/assets/js/contact-form.js') ? filemtime(PANISPERNA_DIR . '/assets/js/contact-form.js') : PANISPERNA_VERSION;
     wp_enqueue_script(
         'panisperna-contact-form',
         PANISPERNA_URI . '/assets/js/contact-form.js',
         [],
-        PANISPERNA_VERSION,
+        $cf_ver,
         true
     );
     wp_localize_script('panisperna-contact-form', 'panisperna_contact_data', [
