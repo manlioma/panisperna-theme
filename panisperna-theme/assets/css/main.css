@@ -2812,6 +2812,7 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
 
     .menu-toggle {
         display: flex;
+        right: 10px;
     }
 
     .nav-bar {
@@ -2897,7 +2898,7 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
 @media (max-width: 768px) {
     /* Navbar: constrain logo row width, nudge logo up */
     .nav-bar__logo-row {
-        width: 94%;
+        width: 90%;
     }
 
     .nav-bar__logo {
