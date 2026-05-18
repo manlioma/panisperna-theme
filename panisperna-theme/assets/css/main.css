@@ -2733,10 +2733,13 @@ a.wc-block-components-button.wp-element-button.wc-block-cart__submit-button.cont
 }
 
 .mobile-menu__logo-row .nav-bar__line {
-    position: static;
+    position: absolute;
     flex: 1;
     height: 1px;
     min-width: 10px;
+    width: 260px;
+    left: 25px;
+    top: 61px;
 }
 
 .mobile-menu__logo-row .nav-bar__logo {
@@ -3621,4 +3624,47 @@ td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions {
     color: inherit;
     text-decoration: underline;
     font-weight: 600;
+}
+
+/* ==========================================================================
+   POST-LIVE — Letti da noi cover alignment
+   ========================================================================== */
+
+#letti-da-noi .book-item__cover {
+    justify-content: start;
+}
+
+/* ==========================================================================
+   POST-LIVE — Mobile: central decorative line + lock html horizontal scroll
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    html {
+        overflow-x: hidden;
+    }
+
+    /* Re-enable grid lines on mobile but render ONE central vertical line
+       instead of the four-column desktop pattern. */
+    .grid-lines {
+        display: block;
+    }
+
+    .grid-lines__inner {
+        display: block;
+        position: relative;
+    }
+
+    .grid-lines__inner span {
+        display: none;
+    }
+
+    .grid-lines__inner::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #454545;
+    }
 }
