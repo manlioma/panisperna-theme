@@ -3661,7 +3661,7 @@ td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-actions {
     .grid-lines__inner::after {
         content: '';
         position: absolute;
-        left: 50%;
+        left: calc(50% + 1px);
         top: 0;
         bottom: 0;
         width: 1px;
